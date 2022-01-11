@@ -124,6 +124,51 @@ run_with_choice g "$(git lb | grep "$1")";
 # Grep for and list changed files of commit on current default descended branch
 function g () { git drl $(c8 "$1"); };
 run_with_choice g "$(git lb | grep "$1")";
+### line-count
+target=$(local_py_exec take_positional_args.py 1 $@);
+if [ -z "$target" ]; then
+    paths=$(git ls-files $@);
+    cmd="cat ";
+else
+    paths=$(git ls-tree -r --full-name --name-only $@);
+    cmd="git dr $1:";
+fi
+for p in $paths; do
+    echo -n "$p "; eval "${cmd}${p} | wc -l";
+done;
+### dc
+git dcc $@ | tail -1;
+### dcc
+function add_lc {
+    args=$(local_py_exec take_positional_args.py 2 $@);
+    c1=$(argn 1 $args);
+    c2=$(argn 2 $args);
+    while read line; do
+        eval path=$(argn 3 $line);
+        lc1=$(git line-count "${c1:-@}" -- "$path" | cut -f2 -d\ );
+        lc2=$(git line-count $c2 -- "$path" | cut -f2 -d\ );
+        echo $line ${lc1:-0} ${lc2:-0};
+    done;
+};
+git d --numstat $@ | add_lc $@ | local_py_exec format_linecount_diff.py
+### drc
+git drcc $@ | tail -1;
+### drcc
+target=$(local_py_exec take_positional_args.py 1 $@);
+if [ -z "$target" ]; then
+    target=@;
+else
+    shift;
+fi;
+git dcc "$target"^ "$target" $@;
+### dcu
+git dc @{u} $@;
+### dccu
+git dcc @{u} $@;
+### dcdev
+git dc develop $@;
+### dccdev
+git dcc develop $@;
 ### cafi
 # Amend HEAD to fixup! a commit on the current default-descended branch
 function g {
