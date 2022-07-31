@@ -1,29 +1,45 @@
 # nadove-git-config
 
-This is where I keep the aliases for my `.gitconfig` file so I can synchronize 
-them between computers. This is intended purely for personal use, so feel to 
-copy my ideas but don't expect any sort of stability or backwards compatibility.
+This is where I organize and develop my git aliases. This is intended purely for
+personal use, so feel to copy my ideas but don't expect any sort of stability or
+backwards compatibility.
 
 # Dependencies
 
 Implemented in pure python 3 and bash with no external libraries. The current
-revision was developed using python 3.9.6 and bash 5.1.8.
+revision was developed using python 3.10.4 and bash 5.1.16.
 
 Many aliases reference other aliases and thus require git>=2.20.
 
-# Installation/update
+Developed on and for Arch Linux, probably(?) works on other linuxes but no
+promises
 
-Clone the repository and run `make`. This overwrites the `[alias]`
-section of `~/.gitconfig`, creating it at the end of the file if necessary.
-The contents of the old file are preserved in `~/.gitconfig.old`.
+# Installation/update/removal
 
-Next, add the following to your `~/.bashrc`:
+Clone the repository and run
 
-    export PATH=$PATH:<path_of_this_repo>/sh/cmds
+    source environment
+    make install
 
-And source `~/.bashrc`.
+This will add a line to `~/.bashrc` to edit `PATH` and edit the global git
+configuration.
 
-For (slightly) more flexible behavior, see `python3 update.py --help`.
+To install updates, run
+
+    source environment
+    git pull
+    make update
+
+If you never use do anything more than that, then you can remove the aliases by
+running
+
+    source environment
+    make uninstall
+
+For info on more fine-grained behavior, run
+
+    source environment
+    make help
 
 # Disclaimer
 

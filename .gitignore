@@ -1,3 +1,4 @@
 .idea/
 __pycache__/
 sh/cmds/_nad_git_al_*
+alias.gitconfig

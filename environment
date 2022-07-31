@@ -1,0 +1,4 @@
+export root_dir="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export bash_script_prefix=_nad_git_al_
+export template_file="$root_dir/alias.template.gitconfig"
+export alias_file="$root_dir/alias.gitconfig"
