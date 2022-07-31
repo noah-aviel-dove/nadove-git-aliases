@@ -9,4 +9,7 @@ scripts:
 clean:
 	rm ./sh/cmds/_nad_git_al_*
 
-.PHONY: update scripts clean
+test:
+	python3 -m unittest test/test.py
+
+.PHONY: update scripts clean test
