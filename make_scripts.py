@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-Expand the bash snippets used to express more complex git aliases into separate
+Expand the bash snippets used to express more complex git alias_templates into separate
 shell scripts for convenient invocation.
 """
 
@@ -11,10 +11,7 @@ import sys
 from typing import Iterable
 
 import arg_types
-
-root_dir = pathlib.Path(__file__).parent
-
-bash_script_prefix = '_nad_git_al_'
+from environment import bash_script_prefix
 
 cmd_head = '#' * 3
 

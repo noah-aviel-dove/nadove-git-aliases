@@ -1,5 +1,12 @@
-update: scripts
-	python3 update.py ~/.gitconfig ./alias.gitconfig
+global: scripts
+	python3 nadove_git_config.py --global
+
+local: scripts
+
+system:
+
+aliases:
+	python3 nadove_git_config.py --local
 
 scripts:
 	mkdir -p ./sh/cmds/
@@ -7,6 +14,6 @@ scripts:
 	chmod +x ./sh/cmds/_nad_git_al_*
 
 clean:
-	rm ./sh/cmds/_nad_git_al_*
+	rm alias.gitconfig ./sh/cmds/_nad_git_al_*
 
-.PHONY: update scripts clean
+.PHONY: aliases scripts clean
