@@ -12,3 +12,9 @@ class Command:
 
     def exec_out(self) -> bytes:
         return subprocess.check_output(self.args)
+
+
+class GitCommand(Command):
+
+    def __init__(self, *args: Optional[str]):
+        super().__init__('git', *args)

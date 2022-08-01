@@ -1,19 +1,23 @@
-global: scripts
-	python3 nadove_git_config.py --global
-
-local: scripts
-
-system:
-
-aliases:
-	python3 nadove_git_config.py --local
+update: scripts
+	python3 nadove_git_config.py --create
 
 scripts:
 	mkdir -p ./sh/cmds/
 	python3 make_scripts.py ./sh/aliases.sh ./sh/cmds/
-	chmod +x ./sh/cmds/_nad_git_al_*
+	chmod +x ./sh/cmds/"$bash_script_prefix"*
 
 clean:
 	rm alias.gitconfig ./sh/cmds/_nad_git_al_*
 
-.PHONY: aliases scripts clean
+
+install: update
+	python3 nadove_git_config.py --include
+	echo 'export PATH=$PATH:$root_dir' >>~/.bashrc
+
+uninstall:
+	python3 nadove_git_config.py --exclude
+
+help:
+	python3 nadove_git_config.py --help
+
+.PHONY: update scripts clean install uninstall help

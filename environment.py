@@ -1,4 +1,9 @@
-import pathlib
+import os
 
-root_dir = pathlib.Path(__file__).parent.absolute()
-bash_script_prefix = '_nad_git_al_'
+for var in [
+    'root_dir',
+    'bash_script_prefix',
+    'alias_file',
+    'template_file'
+]:
+    globals()[var] = os.environ[var]
