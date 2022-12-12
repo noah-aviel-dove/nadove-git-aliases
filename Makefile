@@ -9,7 +9,6 @@ scripts:
 clean:
 	rm "$$alias_file" ./sh/cmds/"$$bash_script_prefix"*
 
-
 install: update
 	python3 nadove_git_config.py --include
 	echo export 'PATH=$$PATH':"$$root_dir"/sh/cmds/ >>~/.bashrc
@@ -17,7 +16,10 @@ install: update
 uninstall:
 	python3 nadove_git_config.py --exclude
 
+test:
+	python3 -m unittest test/test.py
+
 help:
 	python3 nadove_git_config.py --help
 
-.PHONY: update scripts clean install uninstall help
+.PHONY: update scripts clean install uninstall test help
