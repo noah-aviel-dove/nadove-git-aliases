@@ -1,4 +1,4 @@
-s = status -sb
+h = status -sb
 l = #!bash
 lg = l --graph
 lb = #!bash
@@ -31,6 +31,7 @@ aup = au --patch
 r = reset
 ru = r @{u}
 rh = #!bash
+rhq = #!bash
 rhu = rh @{u}
 rb = #!bash
 rbi = rb -i

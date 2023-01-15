@@ -78,7 +78,7 @@ commits=$(git lb | grep "$1");
 function g { git co $(c8 "$1")};
 export -f g;
 run_with_choice g "$"
-### rh
+### rhq
 # Unify `reset --hard <rev>` and `checkout <rev> -- <path>`
 if grep -qPe "^-- " <<<"$@"; then
     git co @ $@;
@@ -87,6 +87,9 @@ elif grep -qPe " -- " <<<"$@"; then
 else
     git r --hard $@;
 fi;
+### rh
+git d;
+git rhq;
 ### rb
 args="$(local_py_exec take_positional_args.py 1 $@)";
 head=$(head -1 <<<"$args");
