@@ -126,7 +126,7 @@ function g () { git drl $(c8 "$1"); };
 run_with_choice g "$(git lb | grep "$1")";
 ### line-count
 target=$(local_py_exec take_positional_args.py 1 $@);
-if [ -z "$target" ]; then
+if [ -z $(head -1 <<<"$target") ]; then
     paths=$(git ls-files $@);
     cmd="cat ";
 else
@@ -141,10 +141,10 @@ git dcc $@ | tail -1;
 ### dcc
 function add_lc {
     args=$(local_py_exec take_positional_args.py 2 $@);
-    c1=$(argn 1 $args);
-    c2=$(argn 2 $args);
+    c1=$(echo "$args " | cut -sf1 -d\ );
+    c2=$(echo "$args " | cut -sf2 -d\ );
     while read line; do
-        eval path=$(argn 3 $line);
+        eval path=$(echo $line | cut -f3 -d\ );
         lc1=$(git line-count "${c1:-@}" -- "$path" | cut -f2 -d\ );
         lc2=$(git line-count $c2 -- "$path" | cut -f2 -d\ );
         echo $line ${lc1:-0} ${lc2:-0};
