@@ -42,8 +42,8 @@ git hb = | while read r; do
 done;
 ### lb
 args="$(local_py_exec take_positional_args.py 1 $@)";
-head=$(head -1 <<<"$args");
-tail=$(tail +2 <<<"$args");
+head=$(car <<<"$args");
+tail=$(cdr <<<"$args");
 head=$(git b "${head:-=}");
 git l $head.. $tail;
 ### cobig0
@@ -89,23 +89,23 @@ else
 fi;
 ### rb
 args="$(local_py_exec take_positional_args.py 1 $@)";
-head=$(head -1 <<<"$args");
-tail=$(tail +2 <<<"$args");
+head=$(car <<<"$args");
+tail=$(cdr <<<"$args");
 git rebase $(git rev ${head:-=}) $tail;
 ### aurbc
 git au;
 git rbc;
 ### d
 args="$(local_py_exec take_positional_args.py 1 $@)";
-head=$(head -1 <<<"$args");
-tail=$(tail +2 <<<"$args");
+head=$(car <<<"$args");
+tail=$(cdr <<<"$args");
 git diff $(git rev ${head:-@} $tail);
 ### d0
 git d --exit-code >/dev/null;
 ### dr
 args="$(local_py_exec take_positional_args.py 1 $@)";
-head=$(head -1 <<<"$args");
-tail=$(tail +2 <<<"$args");
+head=$(car <<<"$args");
+tail=$(cdr <<<"$args");
 git show --oneline $(git rev ${head:-@} $tail);
 ### drib
 # Explore commits on current default-descended branch
@@ -126,7 +126,7 @@ function g () { git drl $(c8 "$1"); };
 run_with_choice g "$(git lb | grep "$1")";
 ### line-count
 target=$(local_py_exec take_positional_args.py 1 $@);
-if [ -z $(head -1 <<<"$target") ]; then
+if [ -z $(car <<<"$target") ]; then
     paths=$(git ls-files $@);
     cmd="cat ";
 else
@@ -141,8 +141,8 @@ git dcc $@ | tail -1;
 ### dcc
 function add_lc {
     args=$(local_py_exec take_positional_args.py 2 $@);
-    c1=$(echo "$args " | cut -sf1 -d\ );
-    c2=$(echo "$args " | cut -sf2 -d\ );
+    c1=$(car <<<$"$args");
+    c2=$(cadr <<<$"$args");
     while read line; do
         eval path=$(echo $line | cut -f3 -d\ );
         lc1=$(git line-count "${c1:-@}" -- "$path" | cut -f2 -d\ );
@@ -165,10 +165,6 @@ git dcc "$target"^ "$target" $@;
 git dc @{u} $@;
 ### dccu
 git dcc @{u} $@;
-### dcdev
-git dc develop $@;
-### dccdev
-git dcc develop $@;
 ### cafi
 # Amend HEAD to fixup! a commit on the current default-descended branch
 function g {
@@ -187,7 +183,7 @@ git au;
 git cami $@;
 ### cf
 # Commit changes to fixup! the most recent non-fixup! commit on the current default-descended branch
-target=$(git lb | grep -vP '^\\w+ fixup!' | head -1);
+target=$(git lb | grep -vP '^\\w+ fixup!' | car);
 commit=$(c8 "$target");
 msg=$(cut -c10- <<<"$target");
 echo fixup! $msg;
@@ -239,8 +235,8 @@ git pf;
 ### rhpfc
 # Hard reset followed by force push followed by chained push
 refs=$(git hr $1 | tac);
-git rhpf $(head -1 <<<"$refs");
-git rhp $(tail -n +2 <<<"$refs");
+git rhpf $(car <<<"$refs");
+git rhp $(cdr <<<"$refs");
 ### rhpfci
 # Hard reset to selection followed by force push followed by chained push
 function g {

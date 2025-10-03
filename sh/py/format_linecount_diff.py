@@ -232,6 +232,7 @@ class Report:
         return column
 
     def add_row(self, line: str):
+        print(line)
         added_lines, deleted_lines, path, old_linecount, new_linecount = line.rstrip().split()
         added_lines = int(added_lines)
         deleted_lines = int(deleted_lines)
