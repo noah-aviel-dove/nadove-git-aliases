@@ -1,7 +1,8 @@
 """
 Input: argv, `n *args`
-Output: stdout, first `n` positional arguments in `args` that aren't preceded by
-` -- `, one per line, or an empty line if there are no such arguments.
+Output: stdout, first `n` lines contain the first `n` positional arguments in
+`args` that aren't preceded by ` -- `, one per line, or empty lines if there are
+fewer than `n` such arguments.
 Then all other args on one line.
 """
 
@@ -27,7 +28,7 @@ for arg in args:
         if arg == '--':
             stop = True
 
-if not head:
+while len(head) < n:
     head.append('')
 
 print(*head, ' '.join(tail), sep='\n')

@@ -10,6 +10,18 @@ function word1 {
     cut -f1 -d' ' <<<"$1";
 }
 
+function car {
+    head -1
+}
+
+function cdr {
+    tail -n +2
+}
+
+function cadr {
+  head -2 | tail -1
+}
+
 function local_py_exec {
     py="$1";
     shift;
